@@ -1,0 +1,243 @@
+{% extends 'basic3.html' %}
+
+{% block title %}
+Product-Details
+{% endblock title %}
+
+{% block css %}
+<style>
+.productInfo{
+padding:2rem;
+}
+.prodImg{
+width:6rem;
+height:6rem;
+cursor:pointer;
+{% comment %} margin:4px; {% endcomment %}
+
+}
+.imgDiv{
+width:6rem;
+height:6rem;
+overflow:hidden;
+border:2px solid black;
+}
+#img1:hover,#img2:hover,#img3:hover,#img4:hover{
+width:6.5rem;
+height:6.5rem;
+transition: 0.5s;
+
+}
+{% comment %} #mainImg:hover{
+    width:31rem;
+    height:37rem;
+    transition: 0.5s;
+    
+} {% endcomment %}
+
+.prodSize{
+width: 3rem;
+height: 3rem;
+margin:2px;
+font-weight:500;
+border-radius:50%;
+border:2px solid black;
+display:flex;
+justify-content:center;
+align-items:center;
+cursor:pointer;
+}
+
+
+.btn1{
+width: 9rem;
+height: 3.4rem;
+font-weight: 500;
+border-radius: 8px;
+font-size: 1.2rem;
+color: white;
+background-color: #f94879;
+}
+.bgred{
+border:4px solid red;
+width: 3.5rem;
+height: 3.5rem
+}
+
+@keyframes moveElement {
+    0%   {right: 6px;}
+    25%  {left: 12px;}
+    50%  {right: 12px;}
+    100% {left: 6px;}
+}
+.addAnim{
+    position: relative;
+    animation-name: moveElement;
+    animation-duration: 0.2s;
+    animation-iteration-count: 3;
+}
+
+.hide{
+    visibility: hidden;
+}
+
+
+
+</style>
+{% endblock css %}
+
+
+{% block body %}
+{% comment %} {% load mathfilters %} {% endcomment %}
+{% load humanize %}
+<div class="jsInfo">
+    <div class="alert alert-success visually-hidden" role="alert">
+        Item Has Added Into Cart !
+    </div>
+    <div class="alert alert-danger visually-hidden" role="alert">
+        Please Login/Signup For Add Items!
+    </div>
+</div>
+<div class="productInfo">
+    <div class="row">
+        <div class="img col-md-2" style="height:34rem;">
+            <div class="imgDiv" onmouseover="changeImg('{{product.image1}}')">
+                <img src="/media/{{product.image1}}" class="card-img-top prodImg" id="img1"
+                    alt="productImg">
+            </div>
+            {% if product.image2 %}
+            <div class="imgDiv" onmouseover="changeImg('{{product.image2}}')">
+                <img src="/media/{{product.image2}}" class="card-img-top prodImg" id="img2"
+                    alt="productImg">
+            </div>
+            {% endif %}
+            {% if product.image3 %}
+            <div class="imgDiv" onmouseover="changeImg('{{product.image3}}')">
+                <img src="/media/{{product.image3}}" class="card-img-top prodImg" id="img3"
+                    alt="productImg">
+            </div>
+            {% endif %}
+            {% if product.image4 %}
+            <div class="imgDiv" onmouseover="changeImg('{{product.image4}}')">
+                <img src="/media/{{product.image4}}" class="card-img-top prodImg" id="img4"
+                    alt="productImg">
+            </div>
+            {% endif %}
+
+
+        </div>
+        <div class="col-md-5 main-frame">
+            <div class="main-img" style="width: 30rem;height: 30rem;overflow: hidden;border:2px solid black;">
+                <img src="/media/{{product.image1}}"  style="cursor: pointer;" class="card-img-top mainImg"
+                    alt="productImg" id="mainImg">
+            </div>
+        </div>
+        <div class="details col-md-5">
+            <h3>{{product.product_name}}</h3>
+            <hr>
+            <h4 class="card-text">RS <span style="text-decoration: line-through;">{{product.regular_price}}</span>
+                <span><b>{{product.sale_price}}</b></span>
+
+                {% comment %} <span style="color: red;">({{
+                    product.sale_price|mul:-100|intdiv:product.regular_price|add:100 }}%
+                    OFF)</span> {% endcomment %}
+                <span style="color: red;">({{product.get_discount}}%
+                    OFF)</span>
+
+            </h4>
+            <p style="color: green;">inclusive of all taxes</p>
+            <h5>SELECT Variant</h5>
+            <div class="prodSizes d-flex"  >
+                {% for variant in variants %}
+                <div style="display: flex; flex-direction: column;">
+                <div class="prodSize" style="background-color: {{variant}};"><span style="display: none;">{{variant}}</span></div>
+                <span class="ms-2">{{variant}}</span>
+                </div>
+                {% endfor %}
+            </div>
+            <p class="hide" style="color: red;">Please Select A Variant!</p>
+            <!-- <br> -->
+            <div>
+                {% comment %} <button class="btn1">Buy Now</button> {% endcomment %}
+                <button class="btn1 update-cart" data-action="add" id="btn{{product.product_id}}">Add To Cart</button>
+            </div>
+            <br>
+
+            <p>{{product.short_description|safe}}</p>
+            <hr>
+            <h5>Product Details</h5>
+            {{product.product_detail|safe}}
+
+        </div>
+    </div>
+</div>
+{% endblock body %}
+
+
+{% block js %}
+<script>
+    var user = '{{request.user}}'
+    $(".prodSize").on("click", function (e) {
+        $(".bgred").removeClass("bgred")
+        $(this).addClass("bgred")
+        // size=$(this).text()
+        // console.log(size)
+    })
+    $(".update-cart").on("click", function () {
+        var prodId = (this.id).slice(3,)
+        var action = this.dataset.action
+        var variant=$(".bgred span").text()
+        console.log(prodId, action, user,variant)
+        if(variant==""){
+            console.log("null size")
+            $(".prodSize").addClass("addAnim")
+            $(".hide").removeClass("hide")
+
+        }
+        else if (user == "AnonymousUser") {
+            console.log("not logged in")
+            $(".alert-danger").removeClass("visually-hidden")
+            setTimeout(() => {
+                $(".alert-danger").addClass("visually-hidden")
+            }, 4000);
+        }
+        else {
+            updateUserOrder(prodId, action,variant)
+        }
+        
+    })
+    function updateUserOrder(prodId, action,variant) {
+        var formData = {
+            'productId': prodId,
+            'action': action,
+            'variant': variant,
+            'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+        };
+
+
+        $.ajax({
+            type: 'POST',
+            url: '/update_item/',
+            data: formData,
+            encode: true
+        }).done(function (data) {
+
+            console.log("data " + data)
+            $(".alert-success").removeClass("visually-hidden")
+            setTimeout(() => {
+                $(".alert-success").addClass("visually-hidden")
+                location.reload()
+            }, 1000);
+            
+            
+        })
+    }
+
+    function changeImg(img){
+        // console.log("triggered "+img)
+        $(".mainImg").attr("src",`/media/${img}`);
+    }
+</script>
+
+
+{% endblock js %}

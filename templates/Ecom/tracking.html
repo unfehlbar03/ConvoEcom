@@ -1,0 +1,43 @@
+{% extends 'basic3.html' %}
+
+{% block title %}
+E-Tracking
+{% endblock title %}
+
+{% block css %}
+<style>
+.update{
+width:50rem;
+height:4rem;
+border:2px solid black;
+border-radius:10px;
+}
+</style>
+{% endblock css %}
+
+
+
+{% block body %}
+
+<div class="container">
+    <h2 class="my-2">Your Order's Updates:</h2>
+    <br>
+    <div class="d-flex justify-contant-center align-items-center flex-column">
+        {% for update,timeStamp in updates %}
+
+        <div class="update d-flex justify-content-between align-items-center p-2 my-2">
+            <h3>{{update}}</h3>
+            <h4><span class="badge bg-secondary ">{{timeStamp}}</span></h4>
+        </div>
+
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock body %}
+
+{% block js %}
+<script>
+
+</script>
+{% endblock js %}

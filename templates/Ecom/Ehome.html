@@ -1,0 +1,247 @@
+{% extends 'basic3.html' %}
+
+{% block title %}
+E-Home
+{% endblock title %}
+{% block css %}
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+
+
+    .col-md-3 {
+        display: inline-block;
+        margin-left: -4px;
+    }
+
+    .carousel-indicators .active {
+        background-color: blue;
+    }
+
+
+
+    .col-md-3 img {
+
+        width: 60rem;
+        height: 23rem;
+        /* width: 17.9rem;
+        height: 21rem; */
+    }
+
+    /* body .carousel-indicator li {
+        background-color: blue;
+    } */
+
+    /* body .carousel-indicators {
+        bottom: -13px;
+
+    } */
+
+    body .carousel-control-prev-icon,
+    body .carousel-control-next-icon {
+        background-color: blue;
+        /* top: -18rem;
+        position: relative; */
+    }
+
+    /* .carousel-control-prev,
+    .carousel-control-next {
+        top: auto;
+        bottom: auto;
+
+    } */
+
+    /* .carousel-control-prev {
+        left: -7rem;
+    }
+
+    .carousel-control-next {
+        right: -7rem;
+    } */
+
+
+    body .no-padding {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .cardBody {
+        background-color: #f94879;
+        border: 2px solid black;
+    }
+
+    /* .blurImg{
+        filter: brightness(40%);
+    }  */
+    .catText {
+        position: absolute;
+        background-color: rgb(0, 0, 0, 0.5);
+        top: 0px;
+        width: 72rem;
+        height: 33rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 500;
+        font-size: 2rem;
+    }
+
+    .displayNone {
+        visibility: hidden;
+    }
+
+    .catImg {
+        z-index: 2;
+    }
+
+    .catCard:hover .catImg {
+        z-index: 0;
+    }
+    .font_size{
+        font-size: 1.5rem;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+{% load static %}
+
+<div class="container" style="max-width: 1149px;">
+    <h2 class="my-3">Categories:</h2>
+    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+
+            {% for i in range %}
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{forloop.counter}}"
+                aria-label="Slide {{forloop.counter|add:1}}"></button>
+            {% endfor %}
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                {% for i in categories %}
+                <img src="/media/{{i.image}}" style="cursor: pointer;height: 30rem;" onclick="openCategory('{{i}}')"
+                    class="d-block w-100" alt="img">
+                <div class="carousel-caption d-none d-md-block" style="background-color: rgb(0, 0, 0, 0.3);">
+                    <h5>{{i}}</h5>
+                    <!-- <p>Some representative placeholder content for the first slide.</p> -->
+                </div>
+                {% if forloop.counter > 0 and not forloop.last %}
+            </div>
+            <div class="carousel-item">
+                {% endif %}
+
+                {% endfor %}
+            </div>
+
+
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <hr>
+    <h2>Products:</h2>
+    <div class="allProducts d-flex flex-wrap justify-content-center">
+        {% for product in products %}
+
+        <div class="card m-4" style="width: 18rem;cursor: pointer;" onclick="showProd('{{product.product_id}}')">
+            <img src="/media/{{product.image1}}" style="cursor: pointer;" class="card-img-top" alt="productImg">
+            <div class="card-body">
+                <div style="height: 8.5rem;overflow: auto;">
+                    <h5 class="card-title">{{product.product_name | truncatechars:103 }}</h5>
+                    <h5 class="card-text">RS <span
+                            style="text-decoration: line-through;">{{product.regular_price}}</span>
+                        <span><b>{{product.sale_price}}</b></span>
+
+
+                        <span style="font-size: 1rem; color: red;">({{product.get_discount}}% OFF)</span>
+                    </h5>
+                </div>
+
+                <div class="ms-4">
+                    <!-- <a href="#" class="btn btn-primary">Buy Now</a> -->
+                    <!-- <a href="/" class="btn btn-primary">View</a> -->
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="d-flex justify-content-center">
+        
+        <nav>
+            <ul class="pagination">
+                {% if products.has_previous %}
+                <li class="page-item">
+                    <a class="page-link font_size" href="?page={{products.previous_page_number}}">&laquo;</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link font_size">&laquo;</a>
+                </li>
+                {% endif %}
+                <li class="page-item"><a class="page-link font_size" href="#">{{products.number}}</a></li>
+                {% if products.has_next %}
+                <li class="page-item">
+                    <a class="page-link font_size" href="?page={{products.next_page_number}}">&raquo;</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link font_size">&raquo;</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+
+{% endblock body %}
+
+{% block js %}
+<script>
+    function openCategory(cat) {
+        window.location.href = `/show-category/${cat}/`
+    }
+    function showProd(prodId) {
+        console.log(prodId)
+        window.location.href = `/showProduct/${prodId}/`
+    }
+
+    $(".nav-item .active").removeClass("active")
+    $(".nav-home").addClass("active")
+
+
+    function catHover(id, cat) {
+        console.log(id, cat)
+        // $(`.blurImg`).removeClass("blurImg");
+        // $(`#${id}`).addClass("blurImg");
+        // console.log(id.slice(6,7),id)
+        $(`#catText${id.slice(6, 7)}`).removeClass("displayNone");
+
+        // document.getElementById(id).style.filter="brightness(120%)";
+    }
+    function catEndHover(id) {
+        console.log(id)
+        // $(`.blurImg`).removeClass("blurImg");
+        $(`displayNone`).removeClass("displayNone");
+        $(`#catText${id.slice(6, 7)}`).addClass("displayNone");
+        // document.getElementById(id).style.filter="brightness(120%)";
+    }
+</script>
+{% endblock js %}

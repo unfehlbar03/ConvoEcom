@@ -1,0 +1,100 @@
+{% extends 'basic3.html' %}
+
+{% block title %}
+E-Orders
+{% endblock title %}
+
+{% block css %}
+<style>
+.orders{
+width: 54rem;
+height: 22rem;
+border:2px solid black;
+border-radius:10px;
+}
+</style>
+{% endblock css %}
+
+{% block body %}
+{% load static %}
+<div class="container">
+    {% if user.is_authenticated %}
+
+    <h2 class="my-2">My Orders</h2>
+    <br>
+    <div class="d-flex justify-content-center align-items-center flex-column">
+        {% for order in orders %}
+        <div class="orders m-3" onclick="redirect('{{order}}')" style="cursor: pointer;">
+            <div class="detail-head p-2 row">
+                <div class="col-md-4">
+                    <!-- <h5>ORDER PLACED</h5> -->
+                    <h5>ORDER {{order.delivery_status}}</h5>
+                    <h5>{{order.date_added}}</h5>
+                </div>
+                <div class="col-md-8">
+                    <h5>Total</h5>
+                    <h5>₹ {{order.get_total}}</h5>
+                </div>
+            </div>
+            <hr>
+            <div class="details px-2 row">
+                <!-- <h5>SUCCESS</h5> -->
+                <div class="prodImg col-md-4">
+                    <img src="/media/{{order.product.image1}}" style="height: 12rem; width: 12rem;" alt="image">
+                </div>
+                <div class="col-md-8">
+                    <h3>{{order.product}}</h3>
+                    <h6>Variant: {{order.variant}}</h6>
+                    <h6>Quantity: {{order.quantity}}</h6>
+                </div>
+
+            </div>
+
+        </div>
+        {% endfor %}
+
+        {% elif not user.is_authenticated %}
+        <div class="d-flex justify-content-center my-4">
+            <h2 style="color:red;">Please Login/Signup To Continue Shopping !</h2>
+        
+        </div>
+        
+
+        {% else %}
+        <div class="info d-flex justify-content-center">
+    
+    <div class="emptyCart">
+      <div class="d-flex justify-content-center">
+        <img style="width: 27rem;height: 15rem;" src="{% static 'Ecom/emptyCart.png' %}" alt="img">
+      </div>
+      <br>
+      <div class="d-flex flex-column">
+      <h2>You have Not Ordered Any Item Yet !</h2>
+      <a href="/" class="btn btn-danger">Continue Shopping</a>
+    </div>
+    </div>
+    
+    <!-- <div>
+    <h3 style="color:red;">Please Add Items In Cart!</h3>
+  </div> -->
+   
+</div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock body %}
+
+
+{% block js %}
+<script>
+
+    $(".nav-item .active").removeClass("active")
+    $(".nav-orders").addClass("active")
+
+    function redirect(order) {
+        window.location.href = `/track-order/${order}/`
+    }
+
+</script>
+{% endblock js %}

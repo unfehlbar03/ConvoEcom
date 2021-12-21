@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+        integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Mic-Search</title>
+    <style>
+        /* .card-img-top {
+            width: 127%;
+        } */
+
+        /* .dis-none {
+            display: none;
+        }
+
+        */
+        /* .prod-div:hover{
+            background-color: rgb(160, 152, 152);
+        }
+        .prod-div:hover img{
+            filter: grayscale(100%);
+        }  */
+        .dis-none {
+            visibility: hidden;
+        }
+
+        .prod-detail {
+            position: absolute;
+            /* top: 15rem; */
+            background-color: rgb(0, 0, 0, 0.5);
+            color: aliceblue;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .prod-img img {
+            width: 18rem;
+        }
+
+        @media screen and (max-width:588px) {
+            .prod-img img {
+                width: 12rem!important;
+            }
+        }
+        @media screen and (max-width:399px) {
+            .prod-img img {
+                width: 10rem!important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h5 style="margin: 15px 0px 0px 30px;">Showing {{ searchProducts|length }} of {{ speak_products|length}} Result(s) For: "{{searchedQuery}}"</h5>
+
+    <div class="allProducts d-flex flex-wrap py-3">
+        {% if searchProducts|length == 0 %}
+        <h2 style="margin: 15px 0px 0px 30px;">No Product Found!</h2>
+        {% else %}
+
+        {% for product in searchProducts %}
+        <div class="prod-div p-2 d-flex flex-column align-items-center justify-content-center"
+            style="border: 2px solid black;width: 50%; position: relative;" id="prod{{product.product_id}}"
+            onclick="showProd('{{product.product_id}}')" onmouseenter="showInfo('{{product.product_id}}')">
+            <div class="prod-img">
+                <img src="/media/{{product.image1}}" alt="img">
+            </div>
+            <div class="prod-detail dis-none " style="border: 2px solid black;" id="info{{product.product_id}}">
+                <div class="p-4">
+                    <h5 class="card-title">{{product.product_name | truncatechars:103 }}</h5>
+                    <h5 class="card-text">RS <span
+                            style="text-decoration: line-through;">{{product.regular_price}}</span>
+                        <span><b>{{product.sale_price}}</b></span>
+
+
+                        <span style="font-size: 1rem; color: red;">({{product.get_discount}}% OFF)</span>
+                    </h5>
+                </div>
+            </div>
+        </div>
+
+
+        {% endfor %}
+        {% endif %}
+    </div>
+    <div class="d-flex justify-content-center">
+
+        <nav>
+            <ul class="pagination">
+                {% if searchProducts.has_previous %}
+                <li class="page-item">
+                    <a class="page-link font_size"
+                        href="?page={{ searchProducts.previous_page_number }}&searchQuery={{ searchedQuery|urlencode }}">&laquo;</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link font_size">&laquo;</a>
+                </li>
+                {% endif %}
+                <li class="page-item"><a class="page-link font_size" href="#">{{searchProducts.number}}</a></li>
+                {% if searchProducts.has_next %}
+                <li class="page-item">
+                    <a class="page-link font_size"
+                        href="?page={{ searchProducts.next_page_number }}&searchQuery={{ searchedQuery|urlencode }}">&raquo;</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link font_size">&raquo;</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</body>
+
+</html>
+
+<script>
+
+    function showProd(prodId) {
+        console.log(prodId)
+        window.location.href = `/showProduct/${prodId}/`
+    }
+    function showInfo(info) {
+        console.log("prod" + info)
+        $(".prod-detail").addClass("dis-none")
+        $(`#info${info}`).removeClass("dis-none")
+    }
+</script>
+<script type="text/javascript">
+
+
+    const myArray = "{{speak_products}}".split("&lt;Product:");
+    console.log("{{speak_products}}")
+    function init() {
+        var msg = new SpeechSynthesisUtterance();
+        msg.voice = window.speechSynthesis.getVoices()[1];
+        msg.text = "We have Found " + "{{ speak_products|length }}" + "products";
+        window.speechSynthesis.speak(msg)
+        var count = 0;
+        for (let i = 0; i < myArray.length && count<=4; i++) {
+            count+=1;
+            var msg = new SpeechSynthesisUtterance();
+            msg.text = myArray[i];
+            window.speechSynthesis.speak(msg);
+        }
+    }
+    window.onload = init;      
+</script>

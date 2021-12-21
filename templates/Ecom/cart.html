@@ -1,0 +1,146 @@
+{% extends 'basic3.html' %}
+
+{% block title %}
+E-Cart
+{% endblock title %}
+
+{% block css %}
+<style>
+.qty{
+display:flex;
+}
+.arrows{
+display:flex;
+}
+.fa{
+cursor:pointer;
+}
+td{
+font-size:1.2rem;
+font-weight:500;
+}
+</style>
+{% endblock css %}
+
+
+
+{% block body %}
+{% load static %}
+<div class="container my-3">
+
+  {% if user.is_authenticated and items.count > 0 %}
+  <h2>Cart</h2>
+  <table class="table table-striped my-2">
+    <thead>
+      <tr>
+        <th scope="col">SN</th>
+        <th scope="col">Product</th>
+        <th scope="col">Variant</th>
+        <th scope="col">Price</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td><img src="/media/{{item.product.image1}}" style="width: 4rem;height: 5rem;" class="card-img-top prodImg"
+            alt="productImg"> {{item.product.product_name}}</td>
+
+        <td>{{item.variant}}</td>
+        <td>{{item.product.sale_price}}</td>
+
+        <td>
+          <div class="qty"><a class="update-cart" data-action="add" data-variant="{{item.variant}}"
+              data-id="{{item.product.product_id}}"><i class="fa fa-caret-up" aria-hidden="true"></i></a> &nbsp;
+            {{item.quantity}} &nbsp;<a class="update-cart" data-action="remove" data-variant="{{item.variant}}"
+              data-id="{{item.product.product_id}}"> <i class="fa fa-caret-down" aria-hidden="true"></i></a> </div>
+        </td>
+        <!-- <td><div class="qty">{{item.quantity}} <div class="arrows"><i class="fa fa-caret-up" aria-hidden="true"></i><i class="fa fa-caret-down" aria-hidden="true"></i></div> </div></td> -->
+        <td>{{item.get_total}}</td>
+
+      </tr>
+      {% endfor %}
+      <tr>
+        <th scope="row"></th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Grand Total</td>
+        <td>{{order.get_cart_total}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="checkout d-flex justify-content-center my-2">
+    <a class="btn btn-danger" href="/checkout/">Checkout <i class="fa fa-arrow-right fa-xs" aria-hidden="true"></i></a>
+  </div>
+  {% elif items.count <= 0 %} 
+  <div class="info d-flex justify-content-center">
+    
+    <div class="emptyCart">
+      <div class="d-flex justify-content-center">
+        <img style="width: 27rem;height: 15rem;" src="{% static 'Ecom/emptyCart.png' %}" alt="img">
+      </div>
+      <br>
+      <div class="d-flex flex-column">
+      <h2>You have no items in your shopping cart.</h2>
+      <a href="/" class="btn btn-danger">Continue Shopping</a>
+    </div>
+    </div>
+    
+    <!-- <div>
+    <h3 style="color:red;">Please Add Items In Cart!</h3>
+  </div> -->
+   
+</div>
+{% else %}
+<div class="info d-flex justify-content-center">
+  <h3 style="color:red;">Please Login/Signup !</h3>
+</div>
+{% endif %}
+</div>
+
+{% endblock body %}
+
+
+{% block js %}
+<script>
+  var user = '{{request.user}}'
+
+  $(".update-cart").on("click", function () {
+    // var prodId=(this.id).slice(3,)
+    var prodId = this.dataset.id
+    var action = this.dataset.action
+    var variant = this.dataset.variant
+    console.log(prodId, action, user, variant)
+    if (user == "AnonymousUser") {
+      console.log("not logged in")
+    }
+    else {
+      updateUserOrder(prodId, action, variant)
+    }
+  })
+  function updateUserOrder(prodId, action, variant) {
+    var formData = {
+      'productId': prodId,
+      'action': action,
+      'variant': variant,
+      'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+    };
+
+
+    $.ajax({
+      type: 'POST',
+      url: '/update_item/',
+      data: formData,
+      encode: true
+    }).done(function (data) {
+
+      console.log("data " + data)
+      location.reload()
+    })
+  }
+</script>
+
+{% endblock js %}

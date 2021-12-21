@@ -1,0 +1,22 @@
+{% extends 'basic3.html' %}
+
+{% block title %}
+E-Payment
+{% endblock title %}
+
+{% block body %}
+<div class="container my-3">
+    <h3>Select Payment Mode</h3>
+    <div class="col-md-6">
+        <select class="form-select" aria-label="Default select example">
+            <option selected>Select Payment Mode</option>
+            <option value="1">Cash On Delivery</option>
+            <option value="2">E-Payment</option>
+            <!-- <option value="3">Three</option> -->
+        </select>
+        <a class="btn btn-danger my-2" href="/">Pay  <i class="fa fa-arrow-right fa-xs" aria-hidden="true"></i></a>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

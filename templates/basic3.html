@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+        integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <title> {% block title %}{% endblock title %} </title>
+    {% comment %} <script src="{% static brython.js %}"></script>
+    <script src="{% static brython_stdlib.js %}"></script> {% endcomment %}
+    <style>
+        .navItems {
+            list-style: none;
+
+        }
+
+        a {
+            text-decoration: none;
+            color: #000;
+        }
+
+        .fa {
+            font-size: 1.5rem;
+        }
+
+        .smallfa {
+            font-size: 1rem;
+        }
+
+        #logoImg {
+            width: 20rem;
+        }
+
+        .navSec2,
+        .navSec3 {
+            background-color: antiquewhite;
+            width: 100%;
+        }
+
+        .navSec1 {
+            width: 100%;
+        }
+
+        #searchBtn {
+            height: 3rem;
+            width: 3rem;
+            border-radius: 0 20px 20px 0;
+            background-color: #fff;
+            border-left: 0;
+        }
+
+        #searchBtn-voice {
+            height: 3rem;
+            width: 3rem;
+            background-color: #fff;
+            border-left: 0;
+        }
+
+        #searchIpt {
+            border-radius: 20px 0 0 20px;
+            border: 2px solid black;
+            height: 3rem;
+        }
+
+        .nav-item {
+            margin: 10px 40px;
+        }
+
+        .BotIcon {
+            width: 6rem;
+            height: 5rem;
+
+
+        }
+
+        .chatBot {
+            padding: 5px;
+            border: 2px solid black;
+            border-radius: 50%;
+            position: fixed;
+            bottom: 2rem;
+            z-index: 100;
+            right: 2rem;
+            background-color: aqua;
+            cursor: pointer;
+        }
+        /* .after_smaller{
+            display: none;
+        } */
+        .inactive_btn{
+            display: none;
+        }
+        .active_btn{
+            display: block;
+        }
+        .search_form{
+            width: 70%;
+        }
+        .cart_div{
+            width: 30%;
+            margin-right: 3px;
+        }
+        .toggle_btn{
+            display: none;
+        }
+        .navSec3_smaller{
+            display: none;
+        }
+        .cat_list_smaller{
+            display: none;
+        }
+        .dis_block{
+            display: block;
+        }
+        .dis_none{
+            display: none;
+        }
+        .auth_smaller{
+            display: flex;
+            justify-content: center;
+        }
+        @media screen and (max-width:1222px) {
+            #searchIpt {
+                width: 75%;
+            }
+
+            #logoImg {
+                width: 16rem;
+            }
+        }
+
+        @media screen and (max-width:866px) {
+
+            #logoImg {
+                width: 12rem;
+            }
+
+            .navSec1 {
+                font-size: 15px;
+            }
+
+            .mail_phone ul {
+                padding-left: 0;
+                font-size: 12px;
+            }
+
+            .social_media ul {
+                padding-left: 0;
+            }
+
+            .fa {
+                font-size: 1rem;
+            }
+
+            .signup_login {
+                margin-left: 2rem;
+            }
+
+            /* .mail_phone .fa{
+                font-size: 0.5rem;
+            } */
+            .mail_phone {
+                font-size: 10px;
+            }
+            #searchIpt {
+                width: 85%;
+                height: 2.5rem;
+            }
+            #searchBtn {
+                height: 2.5rem;
+            }
+        }
+
+        @media screen and (max-width:767px) {
+            #searchIpt {
+                width: 60%;
+                height: 2.5rem;
+                /* margin-left: 5rem; */
+            }
+
+            #searchBtn {
+                height: 2.5rem;
+            }
+            
+            .search_form{
+                width: 84%;
+            }
+            .cart_div{
+                width: 11%;
+            }
+            .toggle_btn{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 5%;
+                height: 2rem;
+                margin-left: 9px;
+                cursor: pointer;
+            }
+            .toggle_btn .fa{
+                font-size: 1.7rem;
+            }
+            .navSec3{
+                display: none!important;
+            }
+            .after_smaller{
+                height: 4rem;
+            }
+            /* .navSec3_smaller{
+                display: block;
+            } */
+            .cat_list_smaller{
+                width: 50%;
+                display: flex;
+                flex-direction: row-reverse;
+            }
+            .logo_smaller{
+                width: 50%;
+                padding: 5px;
+                
+            }
+        }
+        @media screen and (max-width:685px){
+            .social_media{
+                display: none!important;
+            }
+            .carousel-inner {
+                height: 22rem;
+            }
+            .auth_smaller{
+                width: 40%;
+                display: flex;
+                flex-direction: row-reverse;
+            }
+            .mail_phone{
+                width: 60%;
+            }
+            
+        }
+        @media screen and (max-width:522px){
+            .mail_phone{
+                display: none!important;
+            }
+        }
+
+    </style>
+    {% block css %}
+
+    {% endblock css %}
+</head>
+
+<body>
+
+
+
+    {% load static %}
+    <nav class="navbar-light">
+        <div class="d-flex flex-row navSec1">
+
+            <div class="col-md-6 mail_phone d-flex align-items-center">
+                <ul class="navItems d-flex" style="margin-bottom: 0;">
+                    <li>
+                        <a class="nav-link" style="color: black;" href="#"><i class="smallfa fa fa-envelope-o"
+                                aria-hidden="true"></i>
+                            ecomconvo@gmail.com</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" style="color: black;" href="#"><i class="smallfa fa fa-phone-square"
+                                aria-hidden="true"></i> +919737294729</a>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="col-md-3 social_media" style="height: 0px;" style="margin-bottom: 0;">
+                <ul class="navItems d-flex justify-content-end">
+                    <li>
+                        <a class="nav-link" target="_blank" href="https://www.facebook.com/"><i
+                                class="fa fa-facebook-official" aria-hidden="true"></i></a>
+                    </li>
+                    <li>
+                        <a class="nav-link" target="_blank" href="https://www.instagram.com/"><i class="fa fa-instagram"
+                                aria-hidden="true"></i></a>
+                    </li>
+                    <li>
+                        <a class="nav-link" target="_blank" href="https://www.twitter.com"><i class="fa fa-twitter"
+                                aria-hidden="true"></i></a>
+                    </li>
+                    <li>
+                        <a class="nav-link" target="_blank" href="https://www.gmail.com"><i class="fa fa-envelope-o"
+                                aria-hidden="true"></i></a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div class="col-md-3 auth_smaller">
+                <div class="d-flex flex-row signup_login">
+
+
+
+                    {% if user.is_authenticated %}
+                    <div class="dropdown d-flex align-items-center me-3">
+                        <a class="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Welcome {{request.user}}
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="/logout/">Logout</a></li>
+                        </ul>
+                    </div>
+
+                    {% else %}
+                    <a style="border: 0; cursor: pointer; height: 2.7rem;" class="mx-2 d-flex align-items-center"
+                        data-bs-toggle="modal" data-bs-target="#loginModal">
+                        <i class="fa fa-lock" aria-hidden="true"></i> <span style="cursor: pointer;"
+                            class="ms-2">Login</span>
+                    </a>
+
+                    {% endif %}
+
+                    <a style="border: 0; cursor: pointer; height: 2.7rem;" class="mx-2 d-flex align-items-center"
+                        data-bs-toggle="modal" data-bs-target="#signupModal">
+                        <i class="fa fa-user-plus" aria-hidden="true"></i> <span style="cursor: pointer;"
+                            class="ms-2">SignUp</span>
+                    </a>
+
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+        <div class="navSec2 row">
+            <div class="col-md-4 d-flex align-items-center justify-content-center">
+                <div class="col-md-6 logo_smaller">
+                    <a href = "http://localhost:8000"><img id="logoImg" src="{% static 'Ecom/siteLogo2.png' %}" alt="img"></a>
+                </div>
+                <div class="col-md-6 cat_list_smaller">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="smallfa fa fa-bars" aria-hidden="true"></i> Categories
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1"
+                            style="max-height: 13rem; overflow-y: auto;">
+                            {% for cat in categories %}
+                            <li><a class="dropdown-item" href="/show-category/{{cat}}/">{{cat}}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-8 d-flex flex-row after_smaller align-items-center">
+                <div class="toggle_btn">
+                    <i class="fa fa-bars active_btn " aria-hidden="true"></i>
+                    <i class="fa fa-times inactive_btn" aria-hidden="true"></i>
+                </div>
+                <form class="d-flex justify-content-center align-items-center search_form" action="/search/" method="GET">
+                    <input class="form-control" name="searchQuery" id="searchIpt" type="search"
+                        placeholder="What Are You Searching For?" aria-label="Search">
+                    <!-- <button type="submit" id="searchBtn-voice" name="UseMic" value="mic_search" ><i class="fa fa-microphone" aria-hidden="true" ></i></button> -->
+                    <button type="submit" id="searchBtn"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </form>
+
+
+                <div class="d-flex align-items-center justify-content-center cart_div">
+                    <a href="/cart/" class=" d-flex align-items-center"><i class="fa fa-shopping-cart"
+                            aria-hidden="true"></i><span class="mx-2">Cart<span>({{cartItems}})</span></span></a>
+
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="navSec3 row d-flex justify-content-center align-items-center">
+            <div class="col-md-4">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="smallfa fa fa-bars" aria-hidden="true"></i> Categories
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1"
+                        style="max-height: 13rem; overflow-y: auto;">
+                        {% for cat in categories %}
+                        <li><a class="dropdown-item" href="/show-category/{{cat}}/">{{cat}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+
+                <ul class="navbar-nav d-flex flex-row">
+                    <li class="nav-item" style="margin-right: -20px;margin-left: 16%; ">
+                        <a class="nav-link nav-home active" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-orders" href="/my-orders/">Orders</a>
+                    </li>
+                    {% comment %} <li class="nav-item">
+                        <a class="nav-link nav-about" href="/about/">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-contact" href="/contact/">Contact Us</a>
+                    </li> {% endcomment %}
+
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="navSec3_smaller">
+            <ul class="navbar-nav d-flex justify-content-center align-items-center">
+                <li class="nav-item" >
+                    <a class="nav-link nav-home active" aria-current="page" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-orders" href="/my-orders/">Orders</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-about" href="/about/">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-contact" href="/contact/">Contact Us</a>
+                </li>
+
+
+            </ul>
+        </div>
+    </nav>
+
+
+    <form action="/search/" method="get">
+        <button class="chatBot" type="submit" name="UseMic" value="mic_search"><img style="width: 6rem;height: 5.5rem;"
+                src="{% static 'Ecom/chatbot.png' %}" alt="Bot"></button>
+    </form>
+
+
+
+    {% for message in messages %}
+    <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+        <strong>Message </strong> {{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+
+
+    {% block body %}{% endblock body %}
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/login/" method="POST"> {% csrf_token %}
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="loginusername" name="loginusername"
+                                placeholder="Enter your username " required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pass">Enter your password </label>
+                            <input type="password" class="form-control" id="loginpassword" name="loginpassword"
+                                placeholder="Enter your password " required>
+                        </div>
+
+                        <button type="submit" class="my-2 btn btn-primary">Submit</button>
+                    </form>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signupModalLabel">Sign Up</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <form action="/signup/" method='post'>
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username" name="username"
+                                placeholder="Choose a unique username" required>
+                            <!-- <button type="button" id="checkAvail" class="btn btn-info my-2 ">Check Availability</button> -->
+                            <small id="namevalid" class="form-text text-muted invalid-feedback">
+                                This Username Already Exist
+                            </small>
+                        </div>
+                        <div class="form-group">
+                            <label for="fname">First Name</label>
+                            <input type="text" class="form-control" id="fname" name="fname"
+                                placeholder="Enter Your First Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lname">Last Name</label>
+                            <input type="text" class="form-control" id="lname" name="lname"
+                                placeholder="Enter Your Last Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email address</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                placeholder="name@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pass1">Choose a password</label>
+                            <input type="password" class="form-control" id="pass1" name="pass1"
+                                placeholder="Choose Your Password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pass2">Confirm Password</label>
+                            <input type="password" class="form-control" id="pass2" name="pass2"
+                                placeholder="Enter your password again" required>
+                            <small id="namevalid" class="form-text text-muted invalid-feedback">
+                                Your Passwords Are Not Same
+                            </small>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="Check1">
+                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        </div>
+
+                        {% csrf_token %}
+                        <button type="submit" class="my-2 btn btn-primary submitsignup disabled">Submit</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- Optional JavaScript; choose one of the two! -->
+        <script type="text/python" src="sr_script.py"></script>
+        <!-- Option 1: Bootstrap Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+            crossorigin="anonymous"></script>
+
+        <!-- Option 2: Separate Popper and Bootstrap JS -->
+        <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+    -->
+</body>
+
+<script>
+    var checkBox = document.getElementById("Check1")
+    $("#Check1").on("click", function () {
+        if (checkBox.checked == true) {
+            $(".submitsignup").removeClass("disabled")
+        }
+        else {
+            $(".submitsignup").addClass("disabled")
+        }
+    })
+
+    // document.getElementById("username").addEventListener("input",function(){
+    //     console.log("written")
+    // })
+
+    // $("#pass2").blur(function () {
+    $("#pass2").on("input", function () {
+        var pass1 = $("#pass1");
+        var pass2 = $("#pass2");
+        if (pass1.val() == "" || pass1.val() != pass2.val()) {
+            //alert("Please Enter Your Password")
+            pass2.addClass("is-invalid")
+            return false
+        }
+        else {
+            pass2.removeClass("is-invalid")
+            return true
+        }
+        return true
+    })
+
+
+    // $(document).on('input', '#checkAvail', function () {
+    $(document).on('input', '#username', function () {
+        console.log("fired")
+        var checkUsername = $('input[name=username]').val()
+        if (checkUsername != "") {
+            $("#username").removeClass("is-invalid")
+
+            var formData = {
+                'username': $('input[name=username]').val(),
+
+                'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+            };
+
+
+            $.ajax({
+                type: 'POST',
+                url: '/checkUser/',
+                data: formData,
+                encode: true
+            }).done(function (data) {
+
+                if (data == "yes") {
+                    $("#checkAvail").replaceWith(`<button type="button" id="checkAvail" class="btn btn-success my-2">Available</button> `)
+                    $("#username").removeClass("is-invalid")
+                }
+                else {
+                    $("#checkAvail").replaceWith(`<button type="button" id="checkAvail"  class="btn btn-danger my-2">Not Available</button> `)
+                    $("#username").addClass("is-invalid")
+                }
+                setTimeout(() => {
+                    $("#checkAvail").replaceWith(`<button type="button" id="checkAvail" class="btn btn-info my-2">Check Availability</button> `)
+
+                }, 2000);
+            })
+        }
+        else {
+            $("#username").addClass("is-invalid")
+        }
+    })
+    $(".chatBot").on("click", function () {
+        console.log("bot triggered")
+
+    })
+
+    let toggle_btn=document.querySelector(".toggle_btn")
+    toggle_btn.onclick=function(){
+        let inactive_btn=document.querySelector(".inactive_btn")
+        let active_btn=document.querySelector(".active_btn")
+        inactive_btn.classList.add("active_btn");
+        inactive_btn.classList.remove("inactive_btn");
+        active_btn.classList.add("inactive_btn");
+        active_btn.classList.remove("active_btn");
+        document.querySelector(".navSec3_smaller").classList.toggle("dis_block")
+        
+    }
+</script>
+{% block js %} {% endblock js %}
+
+</html>

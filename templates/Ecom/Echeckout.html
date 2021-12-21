@@ -1,0 +1,72 @@
+{% extends 'basic3.html' %}
+
+{% block title %}
+E-Checkout
+{% endblock title %}
+
+{% block body %}
+
+<div class="container my-2">
+    <h2>Fill The Details</h2>
+    <form class="row g-3 needs-validation my-2" method="post" action="/checkout/" novalidate>{% csrf_token %}
+        <div class="col-md-6">
+          <label for="ftname" class="form-label">First name</label>
+          <input type="text" class="form-control" id="ftname" name="ftname" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="ltname" class="form-label">Last name</label>
+          <input type="text" class="form-control" id="ltname" name="ltname" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+        
+        <div class="col-md-9">
+          <label for="address" class="form-label">Address</label>
+          <input type="text" class="form-control" id="address" name="address" required>
+          <div class="invalid-feedback">
+            Please provide a valid Address.
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label for="city" class="form-label">City</label>
+          <input type="text" class="form-control" id="city" name="city" required>
+          <div class="invalid-feedback">
+            Please select a valid city
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label for="pincode" class="form-label">Pin Code</label>
+          <input type="text" class="form-control" id="pincode" name="pincode" required>
+          <div class="invalid-feedback">
+            Please provide a valid zip.
+          </div>
+        </div>
+        <div class="col-md-4">
+            <label for="state" class="form-label">State</label>
+            <input type="text" class="form-control" id="state" name="state" required>
+            <div class="invalid-feedback">
+                Please provide a valid state.
+            </div>
+        </div>
+        <div class="col-md-4">
+          <label for="phone" class="form-label">Phone Number</label>
+          <input type="tel" class="form-control" id="phone" name="phone" required>
+          <div class="invalid-feedback">
+            Please provide a valid phone number.
+          </div>
+        </div>
+        
+        <div class="col-12 d-flex justify-content-center">
+          <button class="btn btn-danger" type="submit">Place Order  <i class="fa fa-arrow-right fa-xs" aria-hidden="true"></i></button>
+        </div>
+      </form>
+</div>
+
+
+
+
+{% endblock body %}

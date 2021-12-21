@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+        integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>mic-product</title>
+    <style>
+        .navItems {
+            list-style: none;
+
+        }
+
+        a {
+            text-decoration: none;
+            color: #000;
+        }
+
+        .fa {
+            font-size: 1.5rem;
+        }
+
+        .smallfa {
+            font-size: 1rem;
+        }
+
+        #logoImg {
+            width: 20rem;
+        }
+
+
+
+        .navSec1 {
+            width: 100%;
+            background-color: antiquewhite;
+        }
+
+
+
+        .productInfo {
+            padding: 2rem;
+        }
+
+        .prodImg {
+            width: 6rem;
+            height: 6rem;
+            cursor: pointer;
+        }
+
+        .imgDiv {
+            width: 6rem;
+            height: 6rem;
+            overflow: hidden;
+            border: 2px solid black;
+        }
+
+        #img1:hover,
+        #img2:hover,
+        #img3:hover,
+        #img4:hover {
+            width: 6.5rem;
+            height: 6.5rem;
+            transition: 0.5s;
+
+        }
+
+
+        .prodSize {
+            width: 3rem;
+            height: 3rem;
+            margin: 2px;
+            font-weight: 500;
+            border-radius: 50%;
+            border: 2px solid black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        .main-img{
+            width: 30rem;
+            height: 30rem;
+            overflow: hidden;
+            border:2px solid black;
+        }
+
+        .btn1 {
+            width: 9rem;
+            height: 3.4rem;
+            font-weight: 500;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            color: white;
+            background-color: #f94879;
+        }
+
+        .bgred {
+            border: 4px solid red;
+            width: 3.5rem;
+            height: 3.5rem
+        }
+
+        @keyframes moveElement {
+            0% {
+                right: 6px;
+            }
+
+            25% {
+                left: 12px;
+            }
+
+            50% {
+                right: 12px;
+            }
+
+            100% {
+                left: 6px;
+            }
+        }
+
+        .addAnim {
+            position: relative;
+            animation-name: moveElement;
+            animation-duration: 0.2s;
+            animation-iteration-count: 3;
+        }
+
+        .hide {
+            visibility: hidden;
+        }
+
+        .show_prod {
+            display: flex;
+            justify-content: center;
+        }
+
+        @media screen and (max-width:681px) {
+            .imgDiv {
+                width: 4rem;
+                height: 4rem;
+            }
+            .prodImg {
+                width: 4rem;
+                height: 4rem;
+            }
+            .social_media{
+                display: none!important;
+            }
+
+        }
+        @media screen and (max-width:528px) {
+            .main-img{
+                width: 25rem;
+                height: 25rem;
+
+            }
+        }
+        @media screen and (max-width:467px) {
+            .main-img{
+                width: 19rem;
+                height: 19rem;
+
+            }
+            .fa{
+                display: none!important;
+            }
+        }
+        @media screen and (max-width:390px) {
+            .imgDiv {
+                width: 3rem;
+                height: 3rem;
+
+            }
+            .prodImg {
+                width: 3rem;
+                height: 3rem;
+
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="row navSec1">
+
+        <div class="col-md-5 d-flex align-items-center">
+            <ul class="navItems d-flex" style="margin-bottom: 0;">
+                <li>
+                    <a class="nav-link" style="color: black;" href="#"><i class="smallfa fa fa-envelope-o"
+                            aria-hidden="true"></i>
+                        ecomconvo@gmail.com</a>
+                </li>
+                <li>
+                    <a class="nav-link" style="color: black;" href="#"><i class="smallfa fa fa-phone-square"
+                            aria-hidden="true"></i> +919737294729</a>
+                </li>
+
+            </ul>
+        </div>
+        <div class="col-md-4 social_media" style="height: 0px;" style="margin-bottom: 0;">
+            <ul class="navItems d-flex justify-content-end">
+                <li>
+                    <a class="nav-link" target="_blank" href="https://www.facebook.com/"><i
+                            class="fa fa-facebook-official" aria-hidden="true"></i></a>
+                </li>
+                <li>
+                    <a class="nav-link" target="_blank" href="https://www.instagram.com/"><i class="fa fa-instagram"
+                            aria-hidden="true"></i></a>
+                </li>
+                <li>
+                    <a class="nav-link" target="_blank" href="https://www.twitter.com"><i class="fa fa-twitter"
+                            aria-hidden="true"></i></a>
+                </li>
+                <li>
+                    <a class="nav-link" target="_blank" href="https://www.gmail.com"><i class="fa fa-envelope-o"
+                            aria-hidden="true"></i></a>
+                </li>
+
+            </ul>
+
+        </div>
+
+        <div class="col-md-3 d-flex justify-content-center">
+            <div class="d-flex flex-row">
+
+
+
+                {% if user.is_authenticated %}
+                <div class="dropdown d-flex align-items-center me-3">
+                    <b>Welcome {{request.user}}</b>
+                </div>
+
+                {% else %}
+                <a style="border: 0; cursor: pointer; height: 2.7rem;" class="mx-2 d-flex align-items-center" href="/">
+                    <b>Login</b>
+                </a>
+
+                {% endif %}
+
+                <a style="border: 0; cursor: pointer; height: 2.7rem;" class="mx-2 d-flex align-items-center" href="/">
+                    <b>Signup</b>
+                </a>
+
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+    <!-- <div class="container"> -->
+    {% load humanize %}
+    <div class="jsInfo">
+        <div class="alert alert-success visually-hidden" role="alert">
+            Item Has Added Into Cart !
+        </div>
+        <div class="alert alert-danger visually-hidden" role="alert">
+            Please Login/Signup For Add Items!
+        </div>
+    </div>
+
+    <div class="productInfo">
+        <div class="show_prod d-flex flex-wrap">
+            <div class="pruct_image_view d-flex justify-content-center" style="width: 40rem;">
+                <div class="img"  style="width: 20%;">
+                    <div class="imgDiv" onmouseover="changeImg('{{product.image1}}')">
+                        <img src="/media/{{product.image1}}" class="card-img-top prodImg" id="img1" alt="productImg">
+                    </div>
+                    {% if product.image2 %}
+                    <div class="imgDiv" onmouseover="changeImg('{{product.image2}}')">
+                        <img src="/media/{{product.image2}}" class="card-img-top prodImg" id="img2" alt="productImg">
+                    </div>
+                    {% endif %}
+                    {% if product.image3 %}
+                    <div class="imgDiv" onmouseover="changeImg('{{product.image3}}')">
+                        <img src="/media/{{product.image3}}" class="card-img-top prodImg" id="img3" alt="productImg">
+                    </div>
+                    {% endif %}
+                    {% if product.image4 %}
+                    <div class="imgDiv" onmouseover="changeImg('{{product.image4}}')">
+                        <img src="/media/{{product.image4}}" class="card-img-top prodImg" id="img4" alt="productImg">
+                    </div>
+                    {% endif %}
+
+
+                </div>
+                <div class=" main-frame d-flex justify-content-center ms-1" style="width: 80%;">
+                    <div class="main-img">
+                        <img src="/media/{{product.image1}}" style="cursor: pointer;" class="card-img-top mainImg"
+                            alt="productImg" id="mainImg">
+                    </div>
+                </div>
+            </div>
+            <div class="details mt-3" style="width: 32rem;">
+                <h3>{{product.product_name}}</h3>
+                <hr>
+                <h4 class="card-text">RS <span style="text-decoration: line-through;">{{product.regular_price}}</span>
+                    <span><b>{{product.sale_price}}</b></span>
+
+
+                    <span style="color: red;">({{product.get_discount}}%
+                        OFF)</span>
+
+                </h4>
+                <p style="color: green;">inclusive of all taxes</p>
+                <h5>SELECTED Variant</h5>
+                <div class="prodSizes d-flex">
+
+                    <div style="display: flex; flex-direction: column;">
+                        <div class="prodSize bgred" style="background-color:{{variants.0}}">
+                        </div>
+                        <span class="d-flex justify-content-center">{{variants.0}}</span>
+
+                    </div>
+
+                </div>
+
+                <p class="hide" style="color: red;">Please Select A Variant!</p>
+                <!-- <br> -->
+                <div>
+                    <!-- {% comment %} <button class="btn1">Buy Now</button> {% endcomment %} -->
+                    <button class="btn1 update-cart" data-action="add" id="btn{{product.product_id}}">Buy Now</button>
+                    {% csrf_token %}
+                </div>
+                <br>
+
+                <p>{{product.short_description|safe}}</p>
+                <hr>
+                <h5>Product Details</h5>
+                {{product.product_detail|safe}}
+
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
+{% block js %}
+<script>
+    // console.log("{{variants.0}}")
+    var user = '{{request.user}}'
+    // $(".prodSize").on("click", function (e) {
+    //     $(".bgred").removeClass("bgred")
+    //     $(this).addClass("bgred")
+    //     // size=$(this).text()
+    //     // console.log(size)
+    // })
+    $(".update-cart").on("click", function () {
+        var prodId = (this.id).slice(3,)
+        var action = this.dataset.action
+        var variant = "{{variants.0}}"
+        console.log(prodId, action, user, variant)
+        if (variant == "") {
+            console.log("null size")
+            $(".prodSize").addClass("addAnim")
+            $(".hide").removeClass("hide")
+
+        }
+        else if (user == "AnonymousUser") {
+            console.log("not logged in")
+            // $(".alert-danger").removeClass("visually-hidden")
+            // setTimeout(() => {
+            //     $(".alert-danger").addClass("visually-hidden")
+            // }, 4000);
+            updateUserOrder(prodId, action, variant)
+        }
+        else {
+            updateUserOrder(prodId, action, variant)
+        }
+
+    })
+    function updateUserOrder(prodId, action, variant) {
+        var formData = {
+            'productId': prodId,
+            'action': action,
+            'variant': variant,
+            'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+            // 'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+        };
+
+
+        $.ajax({
+            type: 'POST',
+            url: '/update_item/',
+            data: formData,
+            encode: true
+        }).done(function (data) {
+
+            console.log(data)
+            $(".alert-success").removeClass("visually-hidden")
+            setTimeout(() => {
+                $(".alert-success").addClass("visually-hidden")
+                // location.reload()
+            }, 1000);
+            let that_order = data["order"]
+            console.log(that_order)
+            window.location.href = `/check_out/${that_order}/`
+
+        })
+    }
+
+    function changeImg(img) {
+        // console.log("triggered "+img)
+        $(".mainImg").attr("src", `/media/${img}`);
+    }
+</script>
+<script type="text/javascript">
+    let voices = []
+
+
+    function init() {
+
+        window.speechSynthesis.onvoiceschanged = function () {
+            voices = window.speechSynthesis.getVoices();
+            console.log(voices)
+        };
+
+        var msg = new SpeechSynthesisUtterance();
+        var tap2 = new SpeechSynthesisUtterance();
+        speechvoices = window.speechSynthesis.getVoices();
+        console.log("hello")
+
+        tap2.voice = voices[22]
+        msg.text = "Single Tap for Product Name";
+        msg.voice = voices[22]
+        window.speechSynthesis.speak(msg);
+        msg.text = "";
+        tap2.text = "Double Tap for Product Description"
+        window.speechSynthesis.speak(tap2);
+        msg.text = "";
+        msg.text = "Tripple Tap for Checkout";
+        window.speechSynthesis.speak(msg);
+
+
+
+
+    }
+
+
+
+    window.onload = init;      
+</script>
+<script type="text/javascript">
+    var detail = 0;
+    var result = new SpeechSynthesisUtterance();
+    $(document).ready(function () {
+        $('body').click(function (event) {
+            detail = detail + 1;
+            setTimeout(function () {
+                if (detail == 1) {
+                    result.text = "Its " + "{{product.product_name}}";
+                    window.speechSynthesis.speak(result);
+                    console.log(result);
+                    detail = 0;
+                }
+                else if (detail == 2) {
+                    result.text = "Its place holder for product_desc";
+                    window.speechSynthesis.speak(result);
+                    console.log(result);
+                    detail = 0;
+                }
+                else if (detail == 3) {
+                    document.getElementById("btn{{product.product_id}}").click();
+                    detail = 0;
+                }
+            }, 1000);
+        });
+    });
+</script>
+{% endblock js %}

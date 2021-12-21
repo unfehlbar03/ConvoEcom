@@ -1,0 +1,55 @@
+{% extends 'basic3.html' %}
+
+{% block title %}
+E-Products
+{% endblock title %}
+
+{% block css %}
+<style>
+
+
+
+</style>
+{% endblock css %}
+
+{% block body %}
+
+<div class="container">
+    <h2 class="my-3">Category: {{category}}</h2>
+    <div class="d-flex flex-wrap justify-content-center">
+        {% for product in products %}
+
+        <div class="card m-4" style="width: 18rem;"  onclick="showProd('{{product.product_id}}')">
+            <img src="/media/{{product.image1}}" style="cursor: pointer;" class="card-img-top" alt="productImg">
+            <div class="card-body">
+                <div style="height: 8.4rem;overflow: auto;">
+                    <h5 class="card-title">{{product.product_name}}</h5>
+                    <h5 class="card-text">RS <span
+                            style="text-decoration: line-through;">{{product.regular_price}}</span>
+                        <span><b>{{product.sale_price}}</b></span>
+                        
+                        
+                        <span style="font-size: 1rem; color: red;">({{product.get_discount}}% OFF)</span>
+                    </h5>
+                </div>
+
+                <!-- <div class="ms-4">
+                    <a href="#" class="btn btn-primary">Buy Now</a>
+                    <a href="#" class="btn btn-primary">Add To Cart</a>
+                </div> -->
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock body %}
+
+{% block js %}
+<script>
+    function showProd(prodId){
+        console.log(prodId)
+        window.location.href=`/showProduct/${prodId}/`
+    }
+</script>
+{% endblock js %}
