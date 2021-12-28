@@ -16,8 +16,8 @@ from pydub import AudioSegment
 import threading
 import time
 
-#nltk.download('punkt')        #EXECUTE THESE 2 LINES IN PYTHON FILE Seprately
-#nltk.download('stopwords')
+nltk.download('punkt')        #EXECUTE THESE 2 LINES IN PYTHON FILE Seprately
+nltk.download('stopwords')
 botVoiceEngine=pyttsx3.init()
 botVoiceEngine.setProperty('rate', 125)     # setting up new voice rate
 voices = botVoiceEngine.getProperty('voices')       # setting up the voice
@@ -39,7 +39,8 @@ def check_sent(word, sentences):
     final = [all([w in x for w in word]) for x in sentences] 
     sent_len = [sentences[i] for i in range(0, len(final)) if final[i]]
     return int(len(sent_len))
-
+mic = speech.Microphone()
+recog = speech.Recognizer()
 def play_bot():
     sound=AudioSegment.from_wav("../convoecom/voice.wav")
     play(sound)

@@ -303,7 +303,7 @@
                     </div>
                 </div>
             </div>
-            <div class="details mt-3" style="width: 32rem;">
+            <div class="details mt-3" style="width: 32rem; margin: 40px;">
                 <h3>{{product.product_name}}</h3>
                 <hr>
                 <h4 class="card-text">RS <span style="text-decoration: line-through;">{{product.regular_price}}</span>
@@ -468,9 +468,10 @@
                     detail = 0;
                 }
                 else if (detail == 2) {
-                    result.text = "Its place holder for product_desc";
+                    result.text = "Its Product Description is" ;
                     window.speechSynthesis.speak(result);
                     console.log(result);
+                    
                     detail = 0;
                 }
                 else if (detail == 3) {

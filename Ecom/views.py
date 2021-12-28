@@ -383,11 +383,11 @@ def searchQuery(request):
             record_type.type=0
             # searchedQuery=query   
             query=request.GET.get("searchQuery").lower()
-            # print("MAN")
+            
         products=Product.objects.all().values("product_name")
         
         prodList=[product["product_name"] for product in products if checksearch(query,product["product_name"])]
-            # print(prodList)
+            
 
         Prods=[]
         for product in prodList:

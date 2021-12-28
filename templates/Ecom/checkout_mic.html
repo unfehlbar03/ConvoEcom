@@ -288,4 +288,37 @@
 
 </script>
 
+<script type="text/javascript">
+  let voices = []
 
+
+  function init() {
+
+      window.speechSynthesis.onvoiceschanged = function () {
+          voices = window.speechSynthesis.getVoices();
+          console.log(voices)
+      };
+
+      var msg = new SpeechSynthesisUtterance();
+      var tap2 = new SpeechSynthesisUtterance();
+      speechvoices = window.speechSynthesis.getVoices();
+      console.log("hello")
+
+      tap2.voice = voices[22]
+      msg.text = "Single Tap to fill your details";
+      msg.voice = voices[22]
+      window.speechSynthesis.speak(msg);
+      msg.text = "";
+      tap2.text = "Double Tap for Placing Order"
+      window.speechSynthesis.speak(tap2);
+    
+
+
+
+
+  }
+
+
+
+  window.onload = init;      
+</script>
